@@ -80,7 +80,7 @@ public class testfilter implements Filter {
 		tmpProp.put("responseSize", length);
 		synchronized(propMap) {
 			propMap.put(id, tmpProp);
-			System.out.println(propMap.get(1).get("requestTime"));
+			System.out.println("hi");
 		}
 	}
 	
