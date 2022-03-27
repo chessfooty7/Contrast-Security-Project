@@ -15,10 +15,7 @@ jobs:
           distribution: 'adopt'
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots verify
-
-on:
-  push:
-jobs:
+        
   test:
     name: Test
     runs-on: ubuntu-latest
