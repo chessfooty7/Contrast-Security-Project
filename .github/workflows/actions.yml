@@ -3,32 +3,21 @@ name: Java CI
 on: [push]
 
 jobs:
-  build:
+  compile:
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        java: [ 11, 12, 13 ]
+    name: Java ${{ matrix.java }} compile
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up JDK 12
+      - name: Checkout Source Code
+        uses: actions/checkout@v2
+      - name: Setup Java
         uses: actions/setup-java@v2
         with:
-          java-version: '12'
           distribution: 'adopt'
-      - name: Build with Maven
-        run: mvn --batch-mode --update-snapshots verify
-        
-  test:
-    name: Test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2     # checkout the repo
-      - run: npm ci                   # install packages
-      - run: npm test                 # run tests (configured to use jest-junit reporter)
-
-      - name: Test Report
-        uses: phoenix-actions/test-reporting@v3
-        id: test-report               # Set ID reference for step
-        if: success() || failure()    # run this step even if previous step failed
-        with:
-          name: JEST Tests            # Name of the check run which will be created
-          path: reports/jest-*.xml    # Path to test results
-          reporter: jest-junit        # Format of test results
+          java-package: jdk
+          java-version: ${{ matrix.java }}
+      - name: Compile the Project
+        working-directory: github-actions-java-maven
+        run: mvn -B compile
