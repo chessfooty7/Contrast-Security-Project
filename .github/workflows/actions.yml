@@ -19,5 +19,5 @@ jobs:
           java-package: jdk
           java-version: ${{ matrix.java }}
       - name: Compile the Project
-        working-directory: Contrast-Security-Project
+        working-directory: ./
         run: mvn -B compile
