@@ -42,12 +42,8 @@ public class MetricsFilterExtension implements Filter {
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		// TODO Auto-generated method stub
-		// place your code here
-//		double startTime = System.currentTimeMillis();
 		long startTime = System.nanoTime();
-		HttpServletRequest httpRequest = (HttpServletRequest) request;
-		String names = "";
+//		String names = "";
 //		for(Enumeration<String> enu = httpRequest.getHeaderNames();  enu.hasMoreElements(); )
 //			names = names + ",  " + enu.nextElement();
 //		String url = ((HttpServletRequest)request).getRequestURL().toString();
@@ -62,10 +58,8 @@ public class MetricsFilterExtension implements Filter {
 		System.out.println(content.getBytes(StandardCharsets.UTF_8).length);
 		long elapsed = System.nanoTime() - startTime;
 		
-		System.out.println(elapsed);
 //		System.out.println(httpRequest.getHeader("mike"));
 		writeMetrics(elapsed, id++, content.getBytes(StandardCharsets.UTF_8).length);
-		System.out.println(contentCaptureResponse);
 	}
 
 	
