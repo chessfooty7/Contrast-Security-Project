@@ -4,22 +4,21 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class nasdaqservlet
+ * Servlet implementation class sp500servlet
  */
-//@WebServlet("/nasdaqservlet")
-public class nasdaqservlet extends HttpServlet {
+//@WebServlet("/sp500servlet")
+public class ServletSP500 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public nasdaqservlet() {
+    public ServletSP500() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,20 +26,23 @@ public class nasdaqservlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("nasdaq");
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+//		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		System.out.println("sp500");
 		response.setContentType("text/html");
 	    PrintWriter out = response.getWriter();
 
-	    out.println("<h1>Nasdaq</h1>");
-	    out.println("<a href=\"https://ir.tesla.com/#tab-quarterly-disclosure\">TSLA</a>");
-	    out.println("<a href=\"https://ir.aboutamazon.com/annual-reports-proxies-and-shareholder-letters/default.aspx\">AMZN</a>");
+	    out.println("<h1>SP 500</h1>");
+	    out.println("<a href=\"https://corporate.exxonmobil.com/Investors/Annual-Report\">XOM</a>");
+	    out.println("<a href=\"https://investors.coca-colacompany.com/\">KO</a>");
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

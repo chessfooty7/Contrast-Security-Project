@@ -13,34 +13,34 @@
   </servlet-mapping>  
   
     <servlet>  
-    <servlet-name>nasdaqservlet</servlet-name>  
-    <servlet-class>com.metrics.myservlets.nasdaqservlet</servlet-class>  
+    <servlet-name>ServletNasdaq</servlet-name>  
+    <servlet-class>com.metrics.myservlets.ServletNasdaq</servlet-class>  
      <load-on-startup>0</load-on-startup>
   </servlet>  
   
   <servlet-mapping>  
-    <servlet-name>nasdaqservlet</servlet-name>  
+    <servlet-name>ServletNasdaq</servlet-name>  
     <url-pattern>/nasdaq</url-pattern>  
   </servlet-mapping>  
   
     <servlet>  
-    <servlet-name>sp500servlet</servlet-name>  
-    <servlet-class>com.metrics.myservlets.sp500servlet</servlet-class>  
+    <servlet-name>ServletSP500</servlet-name>  
+    <servlet-class>com.metrics.myservlets.ServletSP500</servlet-class>  
      <load-on-startup>0</load-on-startup>
   </servlet>  
   
   <servlet-mapping>  
-    <servlet-name>sp500servlet</servlet-name>  
+    <servlet-name>ServletSP500</servlet-name>  
     <url-pattern>/sp500</url-pattern>  
   </servlet-mapping>  
   
 <filter>
-  <filter-name>testfilter</filter-name>
-  <filter-class>com.metrics.myfilter.testfilter</filter-class>
+  <filter-name>MetricsFilterExtension</filter-name>
+  <filter-class>com.metrics.myfilter.MetricsFilterExtension</filter-class>
 </filter>
   
  <filter-mapping>
-  <filter-name>testfilter</filter-name>
+  <filter-name>MetricsFilterExtension</filter-name>
   <url-pattern>/*</url-pattern>
 </filter-mapping>
 

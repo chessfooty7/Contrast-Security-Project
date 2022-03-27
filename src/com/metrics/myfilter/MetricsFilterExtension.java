@@ -1,14 +1,9 @@
 package com.metrics.myfilter;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
-
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -21,15 +16,15 @@ import javax.servlet.http.HttpServletResponse;
 
 
 /**
- * Servlet Filter implementation class testfilter
+ * Servlet Filter implementation class TestFilter
  */
-@WebFilter("/testfilter")
-public class testfilter implements Filter {
-
+@WebFilter("/MetricsFilterExtension")
+public class MetricsFilterExtension implements Filter {
+	static int id = 1;
     /**
      * Default constructor. 
      */
-    public testfilter() {
+    public MetricsFilterExtension() {
         // TODO Auto-generated constructor stub
     }
 
@@ -69,11 +64,12 @@ public class testfilter implements Filter {
 		
 		System.out.println(elapsed);
 //		System.out.println(httpRequest.getHeader("mike"));
-		writeMetrics(elapsed, 1, content.getBytes(StandardCharsets.UTF_8).length);
+		writeMetrics(elapsed, id++, content.getBytes(StandardCharsets.UTF_8).length);
+		System.out.println(contentCaptureResponse);
 	}
 
 	
-	private void writeMetrics(long requestTime, Integer id, int length)
+	private void writeMetrics(long requestTime, Integer id, long length)
 	{
 		Properties tmpProp = new Properties();
 		tmpProp.put("requestTime", requestTime);

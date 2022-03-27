@@ -2,18 +2,12 @@ package com.metrics.myservlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Time;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Properties;
-
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.metrics.myfilter.testfilter;
+import com.metrics.myfilter.MetricsFilterExtension;
 
 /**
  * Servlet implementation class testservlet
@@ -37,36 +31,52 @@ public class MetricsServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		id++;
 //		response.setHeader("mike", "" + id);
-		testfilter filter = new testfilter();
-		HashMap<Integer, Properties> prop = filter.propMap;
 		System.out.println("servlet");
 		
 		response.setContentType("text/html");
 	    PrintWriter out = response.getWriter();
 //	    System.out.println(response.getHeader("mike"));
-	    if(prop.size() != 0) {
-		    for(int i=1; i<=prop.size(); i++) {
-		    	
-		    	out.println("The min request time is: " + getMin("requestTime"));
-		    	out.println("request time: " + prop.get(i).get("requestTime") + getAvg("requestTime"));
-		    	out.println("response size: " + prop.get(i).get("responseSize") + getMax("requestTime"));
-		    }
+	    if(MetricsFilterExtension.propMap.size() != 0) {
+		    	out.println("The min request time is: " + getMin("requestTime") + " nanoseconds" + "<br>");
+		    	out.println("The average request time: " + getAvg("requestTime") + " nanoseconds" + "<br>");
+		    	out.println("The max request time: " + getMax("requestTime")+ " nanoseconds" + "<br>");
+		    	out.println("The min response size is: " + getMin("responseSize") + " bytes" + "<br>");
+		    	out.println("The average response size is: " + getAvg("responseSize") + " bytes" + "<br>");
+		    	out.println("The max response size is: " + getMax("responseSize") + " bytes");
 	    }
+	    else
+	    	out.println("No requests yet");
 	}
 
-	private String getMax(String string) {
-		// TODO Auto-generated method stub
-		return null;
+	private long getMax(String attribute) {
+		long max = 0;
+		for(int i=1; i<=MetricsFilterExtension.propMap.size(); i++) {
+			long tmp = (long) MetricsFilterExtension.propMap.get(i).get(attribute);
+			if(tmp > max) {
+				max = tmp;
+			}
+		}
+		return max;
 	}
 
-	private String getAvg(String string) {
-		// TODO Auto-generated method stub
-		return null;
+	private long getAvg(String attribute) {
+		int argNum = MetricsFilterExtension.propMap.size();
+		long sum = 0;
+		for(int i=1; i<=argNum; i++) {
+			sum += (long) (MetricsFilterExtension.propMap.get(i).get(attribute));
+		}
+		return sum/argNum;
 	}
 
-	private String getMin(String string) {
-		// TODO Auto-generated method stub
-		return null;
+	private long getMin(String attribute) {
+		long min = Long.MAX_VALUE;
+		for(int i=1; i<=MetricsFilterExtension.propMap.size(); i++) {
+			long tmp = (long) MetricsFilterExtension.propMap.get(i).get(attribute);
+			if(tmp < min) {
+				min = tmp;
+			}
+		}
+		return min;
 	}
 
 	/**
