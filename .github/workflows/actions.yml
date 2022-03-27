@@ -4,10 +4,11 @@ on: [push]
 
 jobs:
   compile:
-    runs-on: ubuntu-latest
-    java: 12
-    
-    name: Java 12 compile
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        java: [12]
+    name: Java ${{ matrix.java }} compile
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v2
@@ -16,7 +17,7 @@ jobs:
         with:
           distribution: 'adopt'
           java-package: jdk
-          java-version: 12
+          java-version: ${{ matrix.java }}
       - name: Compile the Project
         working-directory: github-actions-java-maven
         run: mvn -B compile
