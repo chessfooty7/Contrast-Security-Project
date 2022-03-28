@@ -14,7 +14,6 @@ import com.metrics.myfilter.MetricsFilterExtension;
  */
 //@WebServlet("/testservlet")
 public class MetricsServlet extends HttpServlet {
-	static int id = 1;
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -29,13 +28,8 @@ public class MetricsServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		id++;
-//		response.setHeader("mike", "" + id);
-		System.out.println("servlet");
-		
 		response.setContentType("text/html");
 	    PrintWriter out = response.getWriter();
-//	    System.out.println(response.getHeader("mike"));
 	    if(MetricsFilterExtension.propMap.size() != 0) {
 		    	out.println("The min request time is: " + getMin("requestTime") + " nanoseconds" + "<br>");
 		    	out.println("The average request time: " + getAvg("requestTime") + " nanoseconds" + "<br>");
@@ -48,7 +42,7 @@ public class MetricsServlet extends HttpServlet {
 	    	out.println("No requests yet");
 	}
 
-	private long getMax(String attribute) {
+	public long getMax(String attribute) {
 		long max = 0;
 		for(int i=1; i<=MetricsFilterExtension.propMap.size(); i++) {
 			long tmp = (long) MetricsFilterExtension.propMap.get(i).get(attribute);
@@ -59,7 +53,7 @@ public class MetricsServlet extends HttpServlet {
 		return max;
 	}
 
-	private long getAvg(String attribute) {
+	public long getAvg(String attribute) {
 		int argNum = MetricsFilterExtension.propMap.size();
 		long sum = 0;
 		for(int i=1; i<=argNum; i++) {
@@ -68,7 +62,7 @@ public class MetricsServlet extends HttpServlet {
 		return sum/argNum;
 	}
 
-	private long getMin(String attribute) {
+	public long getMin(String attribute) {
 		long min = Long.MAX_VALUE;
 		for(int i=1; i<=MetricsFilterExtension.propMap.size(); i++) {
 			long tmp = (long) MetricsFilterExtension.propMap.get(i).get(attribute);

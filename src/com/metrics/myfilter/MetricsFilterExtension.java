@@ -11,7 +11,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
@@ -20,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebFilter("/MetricsFilterExtension")
 public class MetricsFilterExtension implements Filter {
-	static int id = 1;
+	private static int id = 1;
     /**
      * Default constructor. 
      */
@@ -35,7 +34,7 @@ public class MetricsFilterExtension implements Filter {
 		// TODO Auto-generated method stub
 	}
 	
-	public static HashMap<Integer, Properties>  propMap = new HashMap<Integer, Properties>();
+	public static HashMap<Integer, Properties> propMap = new HashMap<Integer, Properties>();
 	
 	
 	/**
@@ -43,23 +42,17 @@ public class MetricsFilterExtension implements Filter {
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		long startTime = System.nanoTime();
-//		String names = "";
-//		for(Enumeration<String> enu = httpRequest.getHeaderNames();  enu.hasMoreElements(); )
-//			names = names + ",  " + enu.nextElement();
-//		String url = ((HttpServletRequest)request).getRequestURL().toString();
-		System.out.println("my filter is called*******************");
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		ContentCaptureResponse contentCaptureResponse = new ContentCaptureResponse(httpResponse);
+		contentCaptureResponse.setHeader("uniqueId", "" + id++);
+		
 		// pass the request along the filter chain
 		chain.doFilter(request, contentCaptureResponse);
-//		contentCaptureResponse.setHeader("mike", "" + 1);
 		String content = contentCaptureResponse.getContent();
 		response.getOutputStream().write(content.getBytes(StandardCharsets.UTF_8));
-		System.out.println(content.getBytes(StandardCharsets.UTF_8).length);
 		long elapsed = System.nanoTime() - startTime;
 		
-//		System.out.println(httpRequest.getHeader("mike"));
-		writeMetrics(elapsed, id++, content.getBytes(StandardCharsets.UTF_8).length);
+		writeMetrics(elapsed, Integer.parseInt(contentCaptureResponse.getHeader("uniqueId")), content.getBytes(StandardCharsets.UTF_8).length);
 	}
 
 	
@@ -70,7 +63,6 @@ public class MetricsFilterExtension implements Filter {
 		tmpProp.put("responseSize", length);
 		synchronized(propMap) {
 			propMap.put(id, tmpProp);
-			System.out.println("hi");
 		}
 	}
 	

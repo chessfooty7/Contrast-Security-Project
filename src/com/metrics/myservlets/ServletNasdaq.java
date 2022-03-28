@@ -25,13 +25,12 @@ public class ServletNasdaq extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("nasdaq");
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 
 	    out.println("<h1>Nasdaq</h1>");
-	    out.println("<a href=\\\"https://ir.tesla.com/#tab-quarterly-disclosure\\\">TSLA</a>");
-	    out.println("<a href=\\\"https://ir.aboutamazon.com/annual-reports-proxies-and-shareholder-letters/default.aspx\\\">AMZN</a>");
+	    out.println("<a href=\"https://ir.tesla.com/#tab-quarterly-disclosure\">TSLA</a>");
+	    out.println("<a href=\"https://ir.aboutamazon.com/annual-reports-proxies-and-shareholder-letters/default.aspx\">AMZN</a>");
 	    }
 
 	/**
