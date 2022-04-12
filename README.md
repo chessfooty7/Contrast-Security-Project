@@ -1,7 +1,6 @@
 # Contrast-Security-Project
 
 This is a Java Web App using Maven, Tomcat as the server, Eclipse. It is a simple web app which displays my stock portfolio, but has a metrics filter extension which monitors all http requests and calculates various attributes like response size and request time. This data is processed in thread safe data structures and displayed for the user. Every time there is a commit/push on this repository, github actions with compile,build, and test the application.
-*The JUNIT test cases are not found by Maven even though I have added all the necessary plugins and dependencies in my pom.xml. I have ran the tests individually and they work perfectly though.
 
 I built this project for my Contrast Security Interview and to also enhance my knowledge about web apps and web development tools like Github Actions.
 
